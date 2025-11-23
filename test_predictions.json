@@ -1,2 +1,0 @@
-{"id": "utt_0201", "text": "reach me at rohan dot mehta at yahoo dot com and phone is 9123456789", "entities": [{"label": "EMAIL", "start": 12, "end": 17}, {"label": "PERSON_NAME", "start": 18, "end": 21}, {"label": "CITY", "start": 22, "end": 24}, {"label": "EMAIL", "start": 24, "end": 44}, {"label": "EMAIL", "start": 49, "end": 54}, {"label": "EMAIL", "start": 58, "end": 68}]}
-{"id": "utt_0202", "text": "i will be in delhi on 15 august 2025", "entities": [{"label": "CITY", "start": 13, "end": 18}, {"label": "EMAIL", "start": 22, "end": 36}]}
