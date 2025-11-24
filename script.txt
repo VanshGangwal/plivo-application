@@ -4,10 +4,11 @@ Hello everyone, my name is Vansh Gangwal. I am a final year student pursuing IDD
 [PROBLEM STATEMENT]
 The objective was to build a token-level NER model capable of identifying sensitive entities like Credit Cards, Phone Numbers, Emails, and Names from raw, noisy audio transcripts. The key constraints were strict: a p95 latency of under 20 milliseconds on CPU, and a high PII precision of at least 0.80.
 
-[CODE BASE EXPLANATION]
-Let me briefly walk you through the codebase.
-I started by creating a robust data generation script using the `Faker` library. Since the input is "noisy" STT, I couldn't just use clean text. My script injects realistic noise—spelling out numbers like "one two three", replacing dots with the word "dot", and removing punctuation. This ensures the model learns to handle the actual messiness of speech transcripts.
-The core logic resides in `src/train.py` for training the model and `src/predict.py` for inference, where I implemented a BIO-to-span decoder to extract the entities.
+[CODE BASE EXPLANATION & DATA STRATEGY]
+A critical part of this solution was the Data Generation strategy. Since no training data was provided, I couldn't simply use standard datasets because they don't reflect the chaos of raw speech transcripts.
+I built a custom data pipeline using the `Faker` library to generate thousands of realistic PII entities. But the real magic is in the noise injection. I wrote specific logic to simulate Speech-to-Text errors. For example, I converted digits like '123' to words 'one two three', replaced symbols like '@' with 'at' and '.' with 'dot', and stripped away all punctuation and capitalization.
+This synthetic dataset effectively forced the model to learn the *context* of PII rather than relying on easy cues like formatting, which is crucial for real-world robustness.
+The core logic resides in `src/train.py` for training and `src/predict.py` for inference, where I implemented a BIO-to-span decoder.
 
 [MODEL & TOKENIZER]
 For the model, I initially experimented with `distilbert-base-uncased`. While it achieved excellent accuracy, it was too slow, with a p95 latency of around 39 milliseconds. I then tried dynamic quantization, but surprisingly, it increased latency to 59 milliseconds due to CPU overhead on single-batch inference.

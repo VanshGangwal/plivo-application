@@ -20,16 +20,17 @@ Prompt for Gamma/AI Presentation Generator:
         *   **Precision**: PII Precision ≥ 0.80.
 *   **Visual Idea**: A comparison showing "Clean Text" vs "Noisy STT Input" to highlight the difficulty.
 
-**Slide 3: Data & Codebase Strategy**
-*   **Headline**: Synthetic Data Generation
-*   **Key Points**:
-    *   **Tool**: Used `Faker` library for realistic entity generation.
-    *   **Noise Injection**: Custom logic to mimic STT errors:
-        *   Spelling out numbers.
-        *   Verbalized punctuation ("at", "dot").
-        *   Lowercasing and removing symbols.
-    *   **Dataset**: Generated 1000 training samples and 200 dev samples.
-*   **Visual Idea**: A flow diagram: `Faker Entity` -> `Noise Injection` -> `Training Data`.
+**Slide 3: The Data Strategy (Critical Step)**
+*   **Headline**: Synthetic Data & Noise Injection
+*   **Context**: No training data was provided, so creating a high-quality synthetic dataset was the foundation of this success.
+*   **The Pipeline**:
+    1.  **Entity Generation**: Used `Faker` to create realistic Names, Emails, Phones, etc.
+    2.  **STT Simulation (The "Secret Sauce")**:
+        *   **Verbalization**: "john@gmail.com" -> "john at gmail dot com".
+        *   **Digit Expansion**: "911" -> "nine one one".
+        *   **Normalization**: Removed all punctuation and capitalization.
+*   **Impact**: This forced the model to learn semantic context instead of relying on easy formatting cues.
+*   **Visual Idea**: A "Before & After" transformation showing a clean sentence turning into a messy STT transcript.
 
 **Slide 4: Model Architecture**
 *   **Headline**: Model Selection & Optimization
