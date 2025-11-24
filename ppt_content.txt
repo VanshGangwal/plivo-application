@@ -1,0 +1,79 @@
+Prompt for Gamma/AI Presentation Generator:
+"Create a professional, technical presentation about a PII Named Entity Recognition system for noisy audio transcripts. The tone should be academic yet practical. Use the following slide-by-slide content:"
+
+---
+
+**Slide 1: Title Slide**
+*   **Title**: PII Named Entity Recognition on Noisy STT Data
+*   **Subtitle**: High-Precision, Low-Latency Entity Extraction
+*   **Presenter**: Vansh Gangwal
+*   **Affiliation**: IDDD in Data Science, IIT Madras
+*   **Visual Idea**: A clean title slide with a subtle background related to voice data or neural networks.
+
+**Slide 2: The Challenge**
+*   **Headline**: Problem Statement & Constraints
+*   **Key Points**:
+    *   **Objective**: Extract sensitive entities (Credit Cards, Phones, Emails, Names) from raw Speech-to-Text output.
+    *   **Input Challenge**: Noisy text (e.g., "one two three" vs "123", missing punctuation, "dot" instead of ".").
+    *   **Constraints**:
+        *   **Latency**: p95 ≤ 20ms (CPU).
+        *   **Precision**: PII Precision ≥ 0.80.
+*   **Visual Idea**: A comparison showing "Clean Text" vs "Noisy STT Input" to highlight the difficulty.
+
+**Slide 3: Data & Codebase Strategy**
+*   **Headline**: Synthetic Data Generation
+*   **Key Points**:
+    *   **Tool**: Used `Faker` library for realistic entity generation.
+    *   **Noise Injection**: Custom logic to mimic STT errors:
+        *   Spelling out numbers.
+        *   Verbalized punctuation ("at", "dot").
+        *   Lowercasing and removing symbols.
+    *   **Dataset**: Generated 1000 training samples and 200 dev samples.
+*   **Visual Idea**: A flow diagram: `Faker Entity` -> `Noise Injection` -> `Training Data`.
+
+**Slide 4: Model Architecture**
+*   **Headline**: Model Selection & Optimization
+*   **Key Points**:
+    *   **Baseline**: `distilbert-base-uncased` (Accuracy: High, Latency: ~39ms - Too Slow).
+    *   **Failed Experiment**: Dynamic Quantization (Latency: ~59ms - CPU overhead).
+    *   **Final Choice**: `prajjwal1/bert-mini`.
+        *   **Layers**: 4 (vs 6).
+        *   **Hidden Size**: 256 (vs 768).
+        *   **Parameters**: ~11M (Compact & Fast).
+*   **Visual Idea**: A bar chart comparing the size/latency of DistilBERT vs BERT-Mini.
+
+**Slide 5: Training Configuration**
+*   **Headline**: Key Hyperparameters
+*   **Key Points**:
+    *   **Model**: `bert-mini`
+    *   **Epochs**: 5
+    *   **Learning Rate**: 5e-5
+    *   **Batch Size**: 8
+    *   **Optimizer**: AdamW
+*   **Visual Idea**: A clean list or table of parameters.
+
+**Slide 6: Performance Results**
+*   **Headline**: Precision & Accuracy
+*   **Key Points**:
+    *   **PII Precision**: **0.949** (Target > 0.80)
+    *   **PII Recall**: **0.977**
+    *   **PII F1 Score**: **0.963**
+    *   **Conclusion**: The model is highly accurate despite the noisy input.
+*   **Visual Idea**: A large, bold display of the 0.949 Precision score, perhaps with a checkmark indicating target met.
+
+**Slide 7: Latency Analysis**
+*   **Headline**: Meeting the Speed Limit
+*   **Key Points**:
+    *   **Target**: ≤ 20ms (p95)
+    *   **Achieved**: **16.89 ms** (p95)
+    *   **Median (p50)**: 5.46 ms
+    *   **Trade-off**: Significant speedup (2x vs baseline) with minimal loss in accuracy.
+*   **Visual Idea**: A speedometer graphic or a timeline showing the 16.89ms mark well within the 20ms limit.
+
+**Slide 8: Conclusion**
+*   **Headline**: Summary
+*   **Key Points**:
+    *   Successfully built a PII NER system for noisy audio.
+    *   Solved the latency bottleneck using a specialized compact architecture (`bert-mini`).
+    *   Exceeded both precision and speed requirements.
+*   **Visual Idea**: A summary checklist with all items checked off.
